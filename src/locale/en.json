@@ -1,0 +1,20 @@
+{
+  "login": "Login",
+  "email": "Email",
+  "email-placeholder": "Type your email...",
+  "password": "Password",
+  "password-placeholder": "Type your password...",
+  "password-forgot": "Password forgot?",
+  "fullname": "Full name",
+  "fullname-placeholder": "Type your full name...",
+  "address": "Address",
+  "phone-number": "Phone's number",
+  "phone-number-placeholder": "Type your phone's number...",
+  "address-placeholder": "Type your address...",
+  "sign-up": "Sign up",
+  "registration": "Registration",
+  "confirm-password": "Confirm password",
+  "confirm-password-placeholder": "Type your password again...",
+  "sign-in-message": "Don't have an account? ",
+  "sign-up-message": "Already have an account? "
+}

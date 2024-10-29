@@ -1,9 +1,19 @@
-function App() {
+import Login from './pages/Login';
+import { Route, Routes } from 'react-router-dom';
+import SignUp from './pages/SignUp';
+import React from 'react';
+import Homepage from './pages/Homepage';
+import PageNotFound from './pages/PageNotFound';
+
+function App(): JSX.Element {
   return (
-    <div className="App">
-      <h1 className="text-red-500 text-center my-5 font-bold text-3xl">
-        Hello World
-      </h1>
+    <div>
+      <Routes>
+        <Route index element={<Homepage />} />
+        <Route path="registration" element={<SignUp />} />
+        <Route path="login" element={<Login />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
     </div>
   );
 }
