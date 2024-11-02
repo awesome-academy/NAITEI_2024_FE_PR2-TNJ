@@ -3,152 +3,79 @@ import eye from '../image/eye-regular.svg';
 import eyeSlash from '../image/eye-slash-regular.svg';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Input from 'src/components/Input';
+import logo from '../image/TNJ-logo.png';
 
 export default function SignUp(): JSX.Element {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
   const { t } = useTranslation();
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="max-w-[90%] w-[500px] p-8 space-y-8 bg-white shadow-lg rounded-lg">
-        <h2 className="text-3xl font-bold text-center text-[#53afd8]">
-          {t('registration')}
-        </h2>
+    <div className="flex items-center justify-center py-8 border-b-2 min-h-screen bg-white">
+      <div className="max-w-[90%] w-[500px] border-t-2 p-8 space-y-8 bg-white shadow-lg rounded-lg">
+        <div className="flex flex-col items-center">
+          <Link to="/">
+            <img src={logo} alt="Logo" className="px-4" />
+          </Link>
+          <h2 className="text-3xl font-bold text-center text-primary">
+            {t('registration.registration')}
+          </h2>
+        </div>
 
         <form className="space-y-6">
-          <div>
-            <label
-              htmlFor="fullName"
-              className="block text-sm font-medium text-gray-700"
-            >
-              {t('fullname')}
-              <span className="text-red-600">*</span>
-            </label>
-            <input
-              type="text"
-              id="fullName"
-              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-[#53afd8]"
-              placeholder={t('fullname-placeholder')}
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-gray-700"
-            >
-              {t('phone-number')}
-              <span className="text-red-600">*</span>
-            </label>
-            <input
-              type="tel"
-              id="phone-number"
-              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-[#53afd8]"
-              placeholder={t('phone-number-placeholder')}
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="address"
-              className="block text-sm font-medium text-gray-700"
-            >
-              {t('address')}
-              <span className="text-red-600">*</span>
-            </label>
-            <input
-              type="text"
-              id="address"
-              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-[#53afd8]"
-              placeholder={t('address-placeholder')}
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              {t('email')}
-              <span className="text-red-600">*</span>
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-[#53afd8]"
-              placeholder={t('email-placeholder')}
-              autoComplete="username"
-            />
-          </div>
-
-          <div className="relative">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              {t('password')}
-              <span className="text-red-600">*</span>
-            </label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="password"
-              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-[#53afd8]"
-              placeholder={t('password-placeholder')}
-              autoComplete="new-password"
-            />
-            <img
-              src={!showPassword ? eyeSlash : eye}
-              alt="Toggle Password "
-              className="absolute right-3 top-10 w-4 h-4 cursor-pointer"
-              onClick={togglePassword}
-            />
-          </div>
-
-          <div className="relative">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-700"
-            >
-              {t('confirm-password')}
-              <span className="text-red-600">*</span>
-            </label>
-            <input
-              type={showConfirmPassword ? 'text' : 'password'}
-              id="confirmPassword"
-              className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-[#53afd8]"
-              placeholder={t('confirm-password-placeholder')}
-              autoComplete="new-password"
-            />
-            <img
-              src={!showConfirmPassword ? eyeSlash : eye}
-              alt="Toggle Confirm Password "
-              className="absolute right-3 top-10 w-4 h-4 cursor-pointer"
-              onClick={toggleConfirmPassword}
-            />
-          </div>
+          <Input
+            label={t('registration.fullname')}
+            name="fullName"
+            placeholder={t('registration.fullname-placeholder')}
+          />
+          <Input
+            label={t('registration.phone-number')}
+            name="phone-number"
+            placeholder={t('registration.phone-number-placeholder')}
+            type="tel"
+          />
+          <Input
+            label={t('registration.address')}
+            name="address"
+            placeholder={t('registration.address-placeholder')}
+          />
+          <Input
+            label={t('registration.email')}
+            name="email"
+            placeholder={t('registration.email-placeholder')}
+            type="email"
+          />
+          <Input
+            label={t('registration.password')}
+            name="password"
+            placeholder={t('registration.password-placeholder')}
+            type={showPassword ? 'text' : 'password'}
+            icon={showPassword ? eye : eyeSlash}
+            onIconClick={() => setShowPassword(!showPassword)}
+          />
+          <Input
+            label={t('registration.confirm-password')}
+            name="confirmPassword"
+            placeholder={t('registration.confirm-password-placeholder')}
+            type={showConfirmPassword ? 'text' : 'password'}
+            icon={showConfirmPassword ? eye : eyeSlash}
+            onIconClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          />
 
           <div className="text-center">
             <button
               type="submit"
-              className="w-[100px] bg-[#53afd8] px-4 py-2 text-white rounded-lg focus:outline-none hover:opacity-80 transition-all"
+              className="w-[100px] bg-primary px-4 py-2 text-white rounded-lg focus:outline-none hover:opacity-80 transition-all"
             >
-              {t('sign-up')}
+              {t('registration.sign-up')}
             </button>
           </div>
+
           <div className="text-sm">
-            <span>{t('sign-up-message')}</span>
-            <Link to="/login" className="text-[#53afd8] hover:underline">
-              {t('login')}
+            <span>{t('registration.sign-up-message')}</span>
+            <Link to="/login" className="text-primary hover:underline">
+              {t('login.login')}
             </Link>
           </div>
         </form>
