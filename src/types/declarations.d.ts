@@ -1,3 +1,7 @@
+declare module 'react-slick' {
+  import Slider from 'react-slick';
+  export default Slider;
+}
 declare module '*.png' {
   const value: string;
   export default value;
