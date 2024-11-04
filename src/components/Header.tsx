@@ -83,7 +83,7 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
         </div>
       </div>
 
-      <div className="sticky top-0  w-full z-[20] flex justify-between items-center px-4 py-2 bg-white shadow-md">
+      <div className="sticky top-0  w-full z-[20] flex justify-between items-center px-4 py-1 bg-white shadow-sm">
         <div className="lg:hidden flex items-center px-4 z-1000">
           <FontAwesomeIcon
             icon={faListUl}
@@ -146,7 +146,7 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
             title={t('header.user')}
             className="hover:text-primary cursor-pointer text-[20px] mr-6 transition-all"
           />
-          <button type="button" className="relative inline-flex items-center">
+          <Link to="/cart" className="relative inline-flex items-center">
             <FontAwesomeIcon
               icon={faCartShopping}
               title={t('header.cart')}
@@ -155,7 +155,7 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
             <span className="absolute inline-flex items-center justify-center w-4 h-4 text-[8px] font-bold text-white bg-primary rounded-full -top-2 right-3">
               20
             </span>
-          </button>
+          </Link>
         </div>
       </div>
 

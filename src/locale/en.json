@@ -61,5 +61,23 @@
     "subscribe-newsletter": "Subscribe to our newsletter.",
     "enter-your-email": "Enter your email",
     "company-info": "TNJ Jewelry LLC. Business license number 0109194032 issued by the Hanoi Department of Planning and Investment on 25/05/2020. Address: No. 193 Khuong Trung, Khuong Trung Ward, Thanh Xuan District, Hanoi City. Hotline: 0976.827.283 - 0979.238.755. Email: trangsuctnj@gmail.com"
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "cart": "Cart"
+  },
+  "cart": {
+    "product": "product",
+    "price": "Price",
+    "quantity": "Quantity",
+    "subTotal": "Subtotal",
+    "delete": "Detele",
+    "empty-cart": "Empty cart",
+    "cart-total": "Cart totals",
+    "shipping": "Shipping",
+    "total": "Total",
+    "tax-included": "Tax included",
+    "checkout": "Checkout",
+    "buy-more": "Buy more"
   }
 }

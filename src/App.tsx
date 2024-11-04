@@ -7,6 +7,7 @@ import PageNotFound from './pages/PageNotFound';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { useTranslation } from 'react-i18next';
+import Cart from './pages/Cart';
 
 function App(): JSX.Element {
   const { i18n } = useTranslation();
@@ -22,6 +23,7 @@ function App(): JSX.Element {
         <Route index element={<Homepage />} />
         <Route path="registration" element={<SignUp />} />
         <Route path="login" element={<Login />} />
+        <Route path="cart" element={<Cart />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
