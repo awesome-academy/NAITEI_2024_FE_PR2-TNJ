@@ -61,5 +61,23 @@
     "subscribe-newsletter": "Đăng ký nhận bản tin của chúng tôi.",
     "enter-your-email": "Nhập email của bạn",
     "company-info": "Công ty TNHH Trường Nhung Jewelry. Giấy phép ĐKKD số 0109194032 do Sở Kế hoạch và Đầu tư thành phố Hà Nội cấp ngày 25/05/2020. Địa chỉ: Số 193 Khương Trung, Phường Khương Trung, Quận Thanh Xuân, Thành phố Hà Nội. Đường dây nóng: 0976.827.283 - 0979.238.755. Email: trangsuctnj@gmail.com"
+  },
+  "breadcrumb": {
+    "home": "Trang chủ",
+    "cart": "Giỏ hàng"
+  },
+  "cart": {
+    "product": "sản phẩm",
+    "price": "Giá",
+    "quantity": "Số lượng",
+    "subTotal": "Tạm tính",
+    "delete": "Xóa",
+    "empty-cart": "Xóa tất cả",
+    "cart-total": "Tổng giỏ hàng",
+    "shipping": "Vận chuyển",
+    "total": "Tổng cộng",
+    "tax-included": "Đã bao gồm thuế",
+    "checkout": "Thanh toán",
+    "buy-more": "Tiếp tục mua hàng"
   }
 }

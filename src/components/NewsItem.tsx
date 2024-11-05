@@ -47,7 +47,7 @@ const NewsItem = () => {
             </a>
           </h3>
           <Tooltip content={newsItem.des}>
-            <p className="mb-4 line-clamp-3 text-[14px] text-[#7a7a7a]">
+            <p className="mb-4 line-clamp-3 text-[14px] hover:cursor-text text-[#7a7a7a]">
               {newsItem.des}
             </p>
           </Tooltip>
