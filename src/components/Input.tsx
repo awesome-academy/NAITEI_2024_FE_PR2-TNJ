@@ -1,9 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   label?: string;
   labelClassName?: string;
   inputClassName?: string;
+  iconClassName?: string;
   name: string;
   type?: string;
   placeholder?: string;
@@ -17,6 +19,7 @@ export default function Input({
   label = '',
   labelClassName,
   inputClassName,
+  iconClassName,
   name,
   type = 'text',
   placeholder = '',
@@ -25,6 +28,8 @@ export default function Input({
   value,
   onChange,
 }: Props): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <div className="relative w-full">
       <label
@@ -32,7 +37,11 @@ export default function Input({
         className={`block text-sm font-medium text-gray-700 ${labelClassName}`}
       >
         {label}
-        {label && <span className="text-red-600">*</span>}
+        {label &&
+          label !== t('checkout.company-name') &&
+          label !== t('checkout.tax-code') && (
+            <span className="text-red-600">*</span>
+          )}
       </label>
       <input
         type={type}
@@ -48,7 +57,7 @@ export default function Input({
           src={icon}
           alt="icon"
           onClick={onIconClick}
-          className="absolute right-3 top-10 w-4 h-4 cursor-pointer"
+          className={`absolute right-3 top-10 w-4 h-4 cursor-pointer ${iconClassName}`}
         />
       )}
     </div>

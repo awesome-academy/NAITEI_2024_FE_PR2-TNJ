@@ -21,7 +21,7 @@ export default function ProductItem(): JSX.Element {
     setHoverImg(false);
   };
 
-  // Thay thế bằng apu
+  // Thay thế bằng api
   const productInfo = {
     price: '588.000 ₫',
     originalPrice: '900.000 ₫',

@@ -64,7 +64,8 @@
   },
   "breadcrumb": {
     "home": "Home",
-    "cart": "Cart"
+    "cart": "Cart",
+    "checkout": "Checkout"
   },
   "cart": {
     "product": "product",
@@ -79,5 +80,40 @@
     "tax-included": "Tax included",
     "checkout": "Checkout",
     "buy-more": "Buy more"
+  },
+  "checkout": {
+    "company-name": "Company's name",
+    "tax-code": "Tax code",
+    "title": "Shipping Information",
+    "name": "Recipient's Full Name",
+    "namePlaceholder": "Enter full name",
+    "address": "Address",
+    "addressPlaceholder": "Enter shipping address",
+    "phone": "Phone Number",
+    "phonePlaceholder": "Enter phone number",
+    "email": "Email",
+    "emailPlaceholder": "Enter email",
+    "vatNumber": "VAT Number",
+    "vatNumberPlaceholder": "Enter VAT number",
+    "companyName": "Company Name",
+    "companyNamePlaceholder": "Enter company name",
+    "notes": "Notes",
+    "notesPlaceholder": "Enter notes (if any)",
+    "back": "Back",
+    "continue": "Continue",
+    "card-confirm": "Card Order",
+    "pay": "Payment",
+    "paymentDetails": "Payment Details",
+    "paymentDetailsDesc": "Complete your order by providing your payment details.",
+    "cardHolder": "Card Holder",
+    "cardDetails": "Card Details",
+    "country": "Country",
+    "zip": "ZIP",
+    "placeholders": {
+      "cardHolder": "Your full name here",
+      "cardNumber": "xxxx-xxxx-xxxx-xxxx",
+      "expiry": "MM/YY",
+      "cvc": "CVC"
+    }
   }
 }

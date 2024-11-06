@@ -51,3 +51,15 @@
   right: 12px;
   cursor: pointer;
 }
+
+.disable {
+  user-select: unset;
+  cursor: not-allowed;
+  background-color: #babac0;
+  color: #fff;
+}
+
+.disable:hover {
+  opacity: 100;
+  background-color: #babac0;
+}
