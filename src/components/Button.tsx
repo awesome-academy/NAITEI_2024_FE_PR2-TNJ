@@ -5,6 +5,7 @@ interface Props {
   title: string;
   onClick?: () => void;
   variant?: 'primary' | 'secondary';
+  disable?: boolean;
   className?: string;
 }
 
@@ -12,6 +13,7 @@ export default function Button({
   icon,
   title,
   onClick,
+  disable = false,
   variant = 'primary',
   className = '',
 }: Props): JSX.Element {
@@ -24,6 +26,7 @@ export default function Button({
 
   return (
     <button
+      disabled={disable}
       className={`${baseStyles} ${variantStyles[variant]} ${className}`}
       onClick={onClick}
     >

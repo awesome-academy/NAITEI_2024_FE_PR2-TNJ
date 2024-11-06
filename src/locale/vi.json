@@ -64,7 +64,8 @@
   },
   "breadcrumb": {
     "home": "Trang chủ",
-    "cart": "Giỏ hàng"
+    "cart": "Giỏ hàng",
+    "checkout": "Thanh toán"
   },
   "cart": {
     "product": "sản phẩm",
@@ -79,5 +80,40 @@
     "tax-included": "Đã bao gồm thuế",
     "checkout": "Thanh toán",
     "buy-more": "Tiếp tục mua hàng"
+  },
+  "checkout": {
+    "company-name": "Tên công ty",
+    "tax-code": "Mã số thuế (VAT)",
+    "title": "Thông tin giao hàng",
+    "name": "Họ và tên người nhận",
+    "namePlaceholder": "Nhập họ và tên",
+    "address": "Địa chỉ",
+    "addressPlaceholder": "Nhập địa chỉ giao hàng",
+    "phone": "Số điện thoại",
+    "phonePlaceholder": "Nhập số điện thoại",
+    "email": "Email",
+    "emailPlaceholder": "Nhập email",
+    "vatNumber": "Mã số thuế (VAT)",
+    "vatNumberPlaceholder": "Nhập mã số thuế",
+    "companyName": "Tên công ty",
+    "companyNamePlaceholder": "Nhập tên công ty",
+    "notes": "Ghi chú",
+    "notesPlaceholder": "Nhập ghi chú (nếu có)",
+    "back": "Quay lại",
+    "continue": "Tiếp tục",
+    "card-confirm": "Xác nhận đơn hàng",
+    "pay": "Thanh toán",
+    "paymentDetails": "Thông tin thanh toán",
+    "paymentDetailsDesc": "Hoàn tất đơn hàng bằng cách cung cấp thông tin thanh toán của bạn.",
+    "cardHolder": "Chủ thẻ",
+    "cardDetails": "Thông tin thẻ",
+    "country": "Quốc gia",
+    "zip": "Mã bưu chính",
+    "placeholders": {
+      "cardHolder": "Tên đầy đủ của bạn",
+      "cardNumber": "xxxx-xxxx-xxxx-xxxx",
+      "expiry": "MM/YY",
+      "cvc": "CVC"
+    }
   }
 }

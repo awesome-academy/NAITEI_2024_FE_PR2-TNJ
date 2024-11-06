@@ -8,8 +8,8 @@ export default function CartItem(): JSX.Element {
   const { t } = useTranslation();
 
   return (
-    <tr className="relative mb-[20px] pl-[105px] border-b block cart-item md:table-row text-[14px]">
-      <td className="absolute top-[-5px] right-[-5px] z-[1] mb-0 pb-0 border-none product-remove md:relative">
+    <tr className="relative mb-[20px] pl-[105px] border-b block cart-item md:table-row text-[14px] transition-all hover:bg-gray-100">
+      <td className="absolute top-[-5px] right-[-5px] z-[1] mb-0 pb-0 border-none product-remove md:relative md:top-0 md:right-0">
         <FontAwesomeIcon
           icon={faXmark}
           title={t('cart.delete')}
