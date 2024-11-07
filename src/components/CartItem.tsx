@@ -1,8 +1,9 @@
 import React from 'react';
 import productImg from '../image/product-1.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
+import QuantityControl from './QuantityControl';
 
 export default function CartItem(): JSX.Element {
   const { t } = useTranslation();
@@ -36,17 +37,7 @@ export default function CartItem(): JSX.Element {
         <span className="float-left py-2 align-middle text-[12px] font-semibold md:hidden uppercase">
           {t('cart.quantity')}
         </span>
-        <div className="shadow-none inline float-right h-[30px] w-[80px] md:block md:float-none md:h-[42px] border">
-          <div className="h-full flex justify-between items-center">
-            <button className="flex-1 border-r h-full transition-all hover:text-white hover:bg-primary">
-              <FontAwesomeIcon icon={faMinus} />
-            </button>
-            <span className="flex-1 text-center">1</span>
-            <button className="flex-1 h-full border-l transition-all hover:text-white hover:bg-primary">
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-          </div>
-        </div>
+        <QuantityControl />
       </td>
       <td className="mb-2 pb-6 block product-subtotal md:text-[14px] md:table-cell md:mb-0 md:py-[15px] md:px-[10px]">
         <span className="float-left font-semibold text-[12px] md:hidden uppercase">
