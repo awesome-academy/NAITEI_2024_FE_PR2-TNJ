@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import ChangeLanguage from './ChangeLanguage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,22 +9,35 @@ import {
   faListUl,
   faMagnifyingGlass,
   faXmark,
+  faRightFromBracket,
+  faClockRotateLeft,
+  faUserPlus,
+  faRightToBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import Input from './Input';
 import logo from '../image/TNJ-logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Social from './Social';
+import { CartItem } from 'src/types/cart.type';
+import { Category } from 'src/types/category.type';
 
 interface Props {
   onChangeLanguage: (lng: string) => void;
+  cart: CartItem[];
 }
 
-export default function Header({ onChangeLanguage }: Props): JSX.Element {
+export default function Header({ onChangeLanguage, cart }: Props): JSX.Element {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [openCategories, setOpenCategories] = useState<number[]>([]);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
 
+  const handleUserMouseEnter = () => setIsUserDropdownOpen(true);
+  const handleUserMouseLeave = () => setIsUserDropdownOpen(false);
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const handleToggle = (index: number) => {
@@ -36,23 +50,36 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
     });
   };
 
+  const handleLogout = () => {
+    sessionStorage.removeItem('token');
+    setIsLoggedIn(false);
+    navigate('/login');
+  };
+
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-  // Gọi api thay thế chỗ này
-  const categories = [
-    {
-      title: 'Trang sức nữ',
-      items: ['Nhẫn bạc nữ', 'Nhẫn nữ Moissanite', 'Dây chuyền bạc nữ'],
-    },
-    {
-      title: 'Trang sức nam',
-      items: ['Nhẫn nam', 'Dây chuyền nam', 'Lắc tay nam'],
-    },
-    {
-      title: 'Trang sức cho bé',
-      items: ['Nhẫn trẻ em', 'Dây chuyền trẻ em', 'Lắc tay trẻ em'],
-    },
-  ];
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}categories`);
+      const data = await response.json();
+
+      const transformedData = data.map((category: any) => ({
+        id: category.id,
+        title: category.title,
+        subCategories: category.subCategories.map((sub: any) => ({
+          id: sub.id,
+          name: sub.name,
+        })),
+      }));
+      setCategories(transformedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     if (isSidebarOpen) {
@@ -61,6 +88,12 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
       document.body.style.overflow = 'auto';
     }
   }, [isSidebarOpen]);
+
+  const token = sessionStorage.getItem('token');
+  useEffect(() => {
+    setIsLoggedIn(!!token);
+  }, [token]);
+
   return (
     <>
       <div className="bg-[#f5f5f5] hidden lg:flex w-full">
@@ -83,7 +116,7 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
         </div>
       </div>
 
-      <div className="sticky top-0  w-full z-[20] flex justify-between items-center px-4 py-1 bg-white shadow-sm">
+      <div className="sticky top-0 w-full z-[20] flex justify-between items-center px-4 py-1 bg-white shadow-sm">
         <div className="lg:hidden flex items-center px-4 z-1000">
           <FontAwesomeIcon
             icon={faListUl}
@@ -92,7 +125,7 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
           />
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
-            className=" cursor-pointer hover:text-primary transition-all"
+            className="cursor-pointer hover:text-primary transition-all"
           />
         </div>
         <Link to="/">
@@ -100,8 +133,9 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
         </Link>
         <nav className="category hidden lg:flex items-center space-x-6">
           {categories.map((category) => (
-            <div key={category.title} className="relative">
-              <span
+            <div key={category.id} className="relative">
+              <Link
+                to={`/product?category=${category.id}`}
                 className="cursor-pointer hover:text-primary uppercase flex items-center"
                 onMouseEnter={() => setHoveredCategory(category.title)}
                 onMouseLeave={() => setHoveredCategory(null)}
@@ -111,7 +145,7 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
                   icon={faChevronDown}
                   className="ml-1 text-[10px]"
                 />
-              </span>
+              </Link>
 
               <ul
                 className={`before--hover absolute left-0 text-[14px] w-[250px] mt-2 bg-white border border-gray-200 rounded shadow-sm transition-all duration-300 ${
@@ -122,30 +156,92 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
                 onMouseEnter={() => setHoveredCategory(category.title)}
                 onMouseLeave={() => setHoveredCategory(null)}
               >
-                {category.items.map((item) => (
+                {category.subCategories.map((subCategory) => (
                   <li
-                    key={item}
+                    key={subCategory.id}
                     className="hover:text-primary w-full py-2 px-4 text-left border-b border-[#f2f2f2] transition-all"
                   >
-                    <a href="www.facebook.com">{item}</a>
+                    <Link
+                      to={`/product?category=${category.id}&subCategory=${subCategory.id}`}
+                    >
+                      {subCategory.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
           <div className="relative">
-            <span className="cursor-pointer hover:text-primary uppercase flex items-center">
+            <Link
+              to="/news"
+              className="cursor-pointer hover:text-primary uppercase flex items-center"
+            >
               {t('header.news')}
-            </span>
+            </Link>
           </div>
         </nav>
 
         <div className="social flex items-center px-3">
-          <FontAwesomeIcon
-            icon={faCircleUser}
-            title={t('header.user')}
-            className="hover:text-primary cursor-pointer text-[20px] mr-6 transition-all"
-          />
+          <div
+            className="relative"
+            onMouseEnter={handleUserMouseEnter}
+            onMouseLeave={handleUserMouseLeave}
+          >
+            <FontAwesomeIcon
+              icon={faCircleUser}
+              title={t('header.user')}
+              className="hover:text-primary cursor-pointer text-[20px] mr-6 transition-all"
+            />
+
+            {isUserDropdownOpen && (
+              <ul className="absolute before--hover right-0 mt-2 w-[160px] bg-white border border-gray-200 rounded shadow-sm text-sm transition-all duration-300 opacity-100 transform translate-y-0">
+                {isLoggedIn ? (
+                  <>
+                    <li className="hover:text-primary text-nowrap hover:bg-gray-50 py-2 cursor-pointer border-b px-4 text-left transition-all">
+                      <Link
+                        to="/purchase-history"
+                        className="flex items-center"
+                      >
+                        <FontAwesomeIcon
+                          icon={faClockRotateLeft}
+                          className="mr-2"
+                        />
+                        {t('header.purchaseHistory')}
+                      </Link>
+                    </li>
+                    <li
+                      className="hover:text-primary hover:bg-gray-50 py-2 cursor-pointer px-4 text-left transition-all flex items-center"
+                      onClick={handleLogout}
+                    >
+                      <FontAwesomeIcon
+                        icon={faRightFromBracket}
+                        className="mr-2"
+                      />
+                      {t('header.logout')}
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="hover:text-primary hover:bg-gray-50 py-2 cursor-pointer border-b px-4 text-left transition-all">
+                      <Link to="/login">
+                        <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
+                        {t('header.login')}
+                      </Link>
+                    </li>
+                    <li className="hover:text-primary hover:bg-gray-50 py-2 cursor-pointer px-4 text-left transition-all">
+                      <Link to="/registration">
+                        <FontAwesomeIcon
+                          icon={faRightToBracket}
+                          className="mr-2"
+                        />
+                        {t('header.register')}
+                      </Link>
+                    </li>
+                  </>
+                )}
+              </ul>
+            )}
+          </div>
           <Link to="/cart" className="relative inline-flex items-center">
             <FontAwesomeIcon
               icon={faCartShopping}
@@ -153,13 +249,13 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
               className="hover:text-primary cursor-pointer text-[20px] mr-6 transition-all"
             />
             <span className="absolute inline-flex items-center justify-center w-4 h-4 text-[8px] font-bold text-white bg-primary rounded-full -top-2 right-3">
-              20
+              {sessionStorage.getItem('token') ? cart.length : 0}
             </span>
           </Link>
         </div>
       </div>
 
-      {/* Overlay  */}
+      {/* Overlay */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 z-20"
@@ -167,7 +263,7 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
         />
       )}
 
-      {/*Left Sidebar */}
+      {/* Left Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full w-[360px] bg-white z-30 transform transition-transform duration-300 ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
@@ -175,7 +271,7 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
       >
         <div className="">
           <div className="flex w-full items-center p-4 border-b justify-between">
-            <h2 className="text-xl  font-semibold ">{t('menu')}</h2>
+            <h2 className="text-xl font-semibold">{t('menu')}</h2>
             <FontAwesomeIcon
               icon={faXmark}
               className="text-lg hover:rotate-90 transition-all cursor-pointer duration-500"
@@ -185,13 +281,14 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
 
           <ul className="text-[#666666] h-[90vh] overflow-y-auto scrollbar-hidden">
             {categories.map((category, index) => (
-              <li key={category.title}>
+              <li key={category.id}>
                 <div className="border-b flex items-center justify-between">
-                  <span
+                  <Link
+                    to={`/product?category=${category.id}`}
                     className={`font-medium px-4 py-2 uppercase flex-1 cursor-pointer transition-all hover:text-primary`}
                   >
                     {category.title}
-                  </span>
+                  </Link>
                   <span
                     className={`cursor-pointer text-[14px] border-l p-4 hover:bg-primary hover:text-white transition-all ${
                       openCategories.includes(index)
@@ -213,12 +310,16 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
                     openCategories.includes(index) ? 'max-h-screen' : 'max-h-0'
                   } overflow-hidden`}
                 >
-                  {category.items.map((item) => (
+                  {category.subCategories.map((subCategory) => (
                     <li
-                      key={item}
+                      key={subCategory.id}
                       className="w-full text-sm px-4 py-2 border-b hover:text-primary transition-all"
                     >
-                      <a href="www.facebook.com">{item}</a>
+                      <Link
+                        to={`/product?category=${category.id}&subCategory=${subCategory.id}`}
+                      >
+                        {subCategory.name}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -227,11 +328,12 @@ export default function Header({ onChangeLanguage }: Props): JSX.Element {
 
             <li>
               <div className="border-b flex items-center justify-between">
-                <span
+                <Link
+                  to="/news"
                   className={`font-medium px-4 py-4 flex-1 uppercase cursor-pointer transition-all hover:text-primary`}
                 >
                   {t('header.news')}
-                </span>
+                </Link>
               </div>
             </li>
 

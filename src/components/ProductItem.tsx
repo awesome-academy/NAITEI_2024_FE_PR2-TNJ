@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import productImg from '../image/product-1.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEye,
@@ -8,9 +7,23 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import StarList from './StarList';
 import { useTranslation } from 'react-i18next';
+import { ProductType } from 'src/types/product.type';
+import formatPrice from 'src/utils/formatPrice';
+import { Link } from 'react-router-dom';
 
-export default function ProductItem(): JSX.Element {
+interface Props {
+  className?: string;
+  item: ProductType;
+  addToCart: (product: ProductType) => void;
+}
+
+export default function ProductItem({
+  className,
+  item,
+  addToCart,
+}: Props): JSX.Element {
   const [hoverImg, setHoverImg] = useState<boolean>(false);
+
   const { t } = useTranslation();
 
   const handleMouseEnter = () => {
@@ -21,27 +34,26 @@ export default function ProductItem(): JSX.Element {
     setHoverImg(false);
   };
 
-  // Thay thế bằng api
-  const productInfo = {
-    price: '588.000 ₫',
-    originalPrice: '900.000 ₫',
-    rating: 4,
-    title: 'Nhẫn nữ Moissanite sang trọng đính kim cương 8.0mm NNM0003',
-    quantityReviews: 2,
-  };
-
   return (
-    <div className="relative font-sans border transition-all">
+    <div
+      className={`relative font-sans border transition-all cursor-pointer ${className}`}
+    >
       <div className="mb-[30px]">
         <div className="box-border">
           <div className="top">
-            <a href="">
+            <div>
               <div
                 className="relative overflow-hidden block text-center"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                <img src={productImg} className="h-auto w-full" alt="product" />
+                <Link to={`/detail?id=${item.id}`}>
+                  <img
+                    src={item.img[0]}
+                    className="h-auto w-full"
+                    alt="product"
+                  />
+                </Link>
                 <div
                   className={`absolute z-1 right-0 bottom-[10px] left-0 text-center transition-all duration-300 ${
                     hoverImg
@@ -53,14 +65,24 @@ export default function ProductItem(): JSX.Element {
                     <span className="p-3 text-center font-thin relative inline-flex items-center justify-center border-none hover:text-primary transition-all">
                       <FontAwesomeIcon
                         icon={faCartShopping}
-                        title={t('add-to-cart')}
+                        title={t('homepage.add-to-cart')}
+                        onClick={() => addToCart(item)}
                       />
                     </span>
+                    <Link
+                      to={`/detail?id=${item.id}`}
+                      className="p-3 text-center font-thin relative inline-flex items-center justify-center border-none hover:text-primary transition-all"
+                    >
+                      <FontAwesomeIcon
+                        icon={faEye}
+                        title={t('homepage.view')}
+                      />
+                    </Link>
                     <span className="p-3 text-center font-thin relative inline-flex items-center justify-center border-none hover:text-primary transition-all">
-                      <FontAwesomeIcon icon={faEye} title={t('view')} />
-                    </span>
-                    <span className="p-3 text-center font-thin relative inline-flex items-center justify-center border-none hover:text-primary transition-all">
-                      <FontAwesomeIcon icon={faHeart} title={t('heart')} />
+                      <FontAwesomeIcon
+                        icon={faHeart}
+                        title={t('homepage.heart')}
+                      />
                     </span>
                   </div>
                 </div>
@@ -68,41 +90,41 @@ export default function ProductItem(): JSX.Element {
               <ul className="top-[15px] mb-5 left-0 absolute z-[1] flex items-start flex-col flex-nowrap max-w-1/2 transition-opacity duration-300 ease-in-out">
                 <li>
                   <span className="min-w-[40px] text-white bg-[#333] text-center uppercase break-all tracking-[0.4px] leading-4 px-2 py-1.5 text-[12px] whitespace-nowrap">
-                    {productInfo.price}
+                    {formatPrice(item.discountPrice)}
                   </span>
                 </li>
               </ul>
-            </a>
+            </div>
           </div>
 
           <div className="bottom text-center px-[10px] pt-[10px] relative">
             <div className="box-border">
               <div className="product-name capitalize mb-[5px]">
-                <a
-                  href="#"
+                <Link
+                  to={`/detail?id=${item.id}`}
                   className="text-[14px] font-poppins transition-all hover:text-primary line"
                 >
-                  {productInfo.title}
-                </a>
+                  {item.name}
+                </Link>
               </div>
 
               <div className="info-product box-border flex flex-col">
                 <div className="box-border">
                   <span className="inline-block mb-[5px] py-[2px]">
-                    <StarList rating={productInfo.rating} />
+                    <StarList rating={item.rating} />
                   </span>
                   <span className="ml-[5px] inline-block text-[14px] text-[#bababa]">
-                    ({productInfo.quantityReviews})
+                    ({item.comment})
                   </span>
                 </div>
 
                 <div className="price text-[14px] font-poppins">
                   <span className="regular-price mr-[5px] line-through font-normal text-[#bdbdbd]">
-                    {productInfo.originalPrice}
+                    {formatPrice(item.originalPrice)}
                   </span>
 
                   <span className="price font-semibold text-primary">
-                    {productInfo.price}
+                    {formatPrice(item.discountPrice)}
                   </span>
                 </div>
               </div>

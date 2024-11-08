@@ -1,27 +1,40 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import StarList from 'src/components/StarList';
-import ring_1 from '../image/ring-1.jpg';
+import { ProductType } from 'src/types/product.type';
+import formatPrice from 'src/utils/formatPrice';
+import Tooltip from './Tooltip';
 
-export default function FeaturedProductItem() {
+interface Props {
+  item: ProductType;
+}
+
+export default function FeaturedProductItem({ item }: Props) {
   return (
     <div className="li mb-2 w-full transition-all hover:bg-gray-100 py-2">
       <div className="pl-[104px]">
         <div className="float-left ml-[-104px] w-[89px]">
-          <img src={ring_1} alt="Featured Product" />
+          <Link to={`/detail?id=${item.id}`}>
+            <img src={item.img[0]} alt="Featured Product" />
+          </Link>
         </div>
         <div className="bottom">
           <div className="des">
-            <div className="name text-gray-400 text-[14px] mb-2">
-              Lắc tay nam Cuban bản nhỏ 9mm LTA0083
-            </div>
+            <Tooltip content={item.name}>
+              <div className="name text-gray-400 text-[14px] transition-all hover:text-primary line-clamp-2 mb-2">
+                <Link to={`/detail?id=${item.id}`}>{item.name}</Link>
+              </div>
+            </Tooltip>
             <div className="mb-2">
-              <StarList rating={5} className="!pb-0" />
+              <StarList rating={item.rating} className="!pb-0" />
             </div>
             <div className="price">
               <span className="text-gray-400 text-xs line-through mr-2">
-                1.690.000 đ
+                {formatPrice(item.originalPrice)}
               </span>
-              <span className="text-primary text-sm">1.390.000 đ</span>
+              <span className="text-primary text-sm">
+                {formatPrice(item.discountPrice)}
+              </span>
             </div>
           </div>
         </div>

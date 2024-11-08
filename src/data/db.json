@@ -1,3 +1,240 @@
 {
-  "products": [{}]
+  "src": [
+    {
+      "id": 3,
+      "url": "/images/banner-1.jpg"
+    },
+    {
+      "id": 2,
+      "url": "/images/banner-2.jpg"
+    },
+    {
+      "id": 4,
+      "url": "/images/banner-3.jpg"
+    },
+    {
+      "id": 1,
+      "url": "/images/banner-4.jpg"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "title": "Trang sức nữ",
+      "subCategories": [
+        {
+          "id": 101,
+          "name": "Nhẫn bạc nữ"
+        },
+        {
+          "id": 102,
+          "name": "Nhẫn nữ Moissanite"
+        },
+        {
+          "id": 103,
+          "name": "Dây chuyền bạc nữ"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Trang sức nam",
+      "subCategories": [
+        {
+          "id": 201,
+          "name": "Nhẫn nam"
+        },
+        {
+          "id": 202,
+          "name": "Dây chuyền nam"
+        },
+        {
+          "id": 203,
+          "name": "Lắc tay nam"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Trang sức cho bé",
+      "subCategories": [
+        {
+          "id": 301,
+          "name": "Nhẫn trẻ em"
+        },
+        {
+          "id": 302,
+          "name": "Dây chuyền trẻ em"
+        },
+        {
+          "id": 303,
+          "name": "Lắc tay trẻ em"
+        }
+      ]
+    }
+  ],
+  "banners": [
+    {
+      "id": 1,
+      "url": "/images/banner-homepage.png"
+    },
+    {
+      "id": 2,
+      "url": "/images/banner-homepage-2.png"
+    },
+    {
+      "id": 3,
+      "url": "/images/banner-homepage-3.png"
+    }
+  ],
+  "clientImage": [
+    {
+      "id": 1,
+      "url": "/images/slider-1.jpg"
+    },
+    {
+      "id": 2,
+      "url": "/images/slider-2.jpg"
+    },
+    {
+      "id": 3,
+      "url": "/images/slider-3.jpg"
+    },
+    {
+      "id": 4,
+      "url": "/images/slider-4.jpg"
+    },
+    {
+      "id": 5,
+      "url": "/images/slider-5.jpg"
+    },
+    {
+      "id": 6,
+      "url": "/images/slider-6.jpg"
+    },
+    {
+      "id": 7,
+      "url": "/images/slider-7.jpg"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Nhẫn Moissanite nam sang trọng 8.0mm - Kiểm định GRANNAM0002",
+      "rating": 4,
+      "discountPrice": 500000,
+      "originalPrice": 700000,
+      "comment": 2,
+      "sku": "NNAM0002",
+      "img": [
+        "/images/products/product_1/product-1.jpg",
+        "/images/products/product_1/product-2.jpg",
+        "/images/products/product_1/product-3.jpg",
+        "/images/products/product_1/product-4.jpg",
+        "/images/products/product_1/product-5.jpg",
+        "/images/products/product_1/product-6.jpg"
+      ],
+      "remainingStock": 2,
+      "iframe": "https://www.youtube.com/embed/2QW-BXrlOrs",
+      "brandId": 1
+    },
+    {
+      "id": 2,
+      "name": "Dây chuyền bạc nữ khắc tên hình trái tim DCN0496",
+      "rating": 4,
+      "discountPrice": 500000,
+      "originalPrice": 700000,
+      "comment": 2,
+      "sku": "DCN0496",
+      "img": [
+        "/images/products/product_2/product-1.jpg",
+        "/images/products/product_2/product-2.jpg",
+        "/images/products/product_2/product-3.jpg",
+        "/images/products/product_2/product-4.jpg",
+        "/images/products/product_2/product-5.jpg",
+        "/images/products/product_2/product-6.jpg"
+      ],
+      "remainingStock": 2,
+      "iframe": "",
+      "brandId": 1
+    },
+    {
+      "id": 3,
+      "name": "Dây chuyền bạc nữ khắc tên hình trái tim DCN0496",
+      "rating": 4,
+      "discountPrice": 500000,
+      "originalPrice": 700000,
+      "comment": 2,
+      "sku": "DCN0496",
+      "img": [
+        "/images/products/product_3/product-1.jpg",
+        "/images/products/product_3/product-2.jpg",
+        "/images/products/product_3/product-3.jpg",
+        "/images/products/product_3/product-4.jpg",
+        "/images/products/product_3/product-5.jpg"
+      ],
+      "remainingStock": 2,
+      "iframe": "",
+      "brandId": 1
+    },
+    {
+      "id": 4,
+      "name": "Lắc tay bạc nữ hình cỏ 4 lá dây họa tiết vô cực LTN0130",
+      "rating": 4,
+      "discountPrice": 500000,
+      "originalPrice": 700000,
+      "comment": 2,
+      "sku": "LTN0130",
+      "img": [
+        "/images/products/product_4/product-1.jpg",
+        "/images/products/product_4/product-2.jpg",
+        "/images/products/product_4/product-3.jpg",
+        "/images/products/product_4/product-4.jpg",
+        "/images/products/product_4/product-5.jpg",
+        "/images/products/product_4/product-6.jpg",
+        "/images/products/product_4/product-7.jpg"
+      ],
+      "remainingStock": 2,
+      "iframe": "https://www.youtube.com/embed/so8FMz3Zfqc",
+      "brandId": 1
+    }
+  ],
+  "users": [
+    {
+      "id": "f7041e25-4721-47fb-8b82-6c29021c2701",
+      "email": "a@gmail.com",
+      "fullName": "Tinhvila",
+      "phoneNumber": "0123456789",
+      "address": "dsdkdksakdask",
+      "password": "\u0006jEv",
+      "cart": [],
+      "order": []
+    }
+  ],
+  "news": [
+    {
+      "id": 1,
+      "urlImg": "/images/news/banner-homepage.png",
+      "day": "15",
+      "month": "Aug",
+      "title": "Khai trương cơ sở mới ở Thủ Đức",
+      "des": "Mở đầu những ngày hè rực rỡ tháng 7, Công ty TNHH Truong Nhung Jewelry đã tổ chức thành công một buổi Team Building với sự tham gia và hưởng ứng nhiệt tình của các thành viên trong công ty cùng người thân. Đây là sự kiện đem lại nhiều trải nghiệm bổ ích, vừa giúp nhân viên được nghỉ ngơi thư giãn, vừa là cơ hội để gắn kết các thành viên công ty sau một quãng thời gian làm việc vất vả. Cùng nhìn lại những khoảnh khắc ấn tượng và đầy ý nghĩa tại chuyến đi Quần đảo Cô Tô xinh đẹp nhé!"
+    },
+    {
+      "id": 2,
+      "urlImg": "/images/news/banner-homepage-2.png",
+      "day": "20",
+      "month": "Oct",
+      "title": "Khai trương cơ sở mới ở Thủ Đức",
+      "des": "Mở đầu những ngày hè rực rỡ tháng 7, Công ty TNHH Truong Nhung Jewelry đã tổ chức thành công một buổi Team Building với sự tham gia và hưởng ứng nhiệt tình của các thành viên trong công ty cùng người thân. Đây là sự kiện đem lại nhiều trải nghiệm bổ ích, vừa giúp nhân viên được nghỉ ngơi thư giãn, vừa là cơ hội để gắn kết các thành viên công ty sau một quãng thời gian làm việc vất vả. Cùng nhìn lại những khoảnh khắc ấn tượng và đầy ý nghĩa tại chuyến đi Quần đảo Cô Tô xinh đẹp nhé!"
+    },
+    {
+      "id": 3,
+      "urlImg": "/images/news/banner-homepage-3.png",
+      "day": "20",
+      "month": "Oct",
+      "title": "Khai trương cơ sở mới ở Thủ Đức",
+      "des": "Mở đầu những ngày hè rực rỡ tháng 7, Công ty TNHH Truong Nhung Jewelry đã tổ chức thành công một buổi Team Building với sự tham gia và hưởng ứng nhiệt tình của các thành viên trong công ty cùng người thân. Đây là sự kiện đem lại nhiều trải nghiệm bổ ích, vừa giúp nhân viên được nghỉ ngơi thư giãn, vừa là cơ hội để gắn kết các thành viên công ty sau một quãng thời gian làm việc vất vả. Cùng nhìn lại những khoảnh khắc ấn tượng và đầy ý nghĩa tại chuyến đi Quần đảo Cô Tô xinh đẹp nhé!"
+    }
+  ]
 }

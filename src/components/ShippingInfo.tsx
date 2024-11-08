@@ -1,22 +1,35 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Input from './Input';
-import usePersistedState from 'src/hooks/usePersistedState';
 
-const ShippingInfo: React.FC = () => {
+interface ShippingInfoProps {
+  shippingDetails: {
+    name: string;
+    address: string;
+    phone: string;
+    email: string;
+    notes: string;
+    companyName: string;
+    vatNumber: string;
+  };
+  setShippingDetails: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      address: string;
+      phone: string;
+      email: string;
+      notes: string;
+      companyName: string;
+      vatNumber: string;
+    }>
+  >;
+}
+
+const ShippingInfo: React.FC<ShippingInfoProps> = ({
+  shippingDetails,
+  setShippingDetails,
+}) => {
   const { t } = useTranslation();
-  const [shippingDetails, setShippingDetails] = usePersistedState(
-    'shipping-info',
-    {
-      name: '',
-      address: '',
-      phone: '',
-      email: '',
-      notes: '',
-      companyName: '',
-      vatNumber: '',
-    }
-  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
