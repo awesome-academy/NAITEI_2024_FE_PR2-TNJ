@@ -115,5 +115,24 @@
       "expiry": "MM/YY",
       "cvc": "CVC"
     }
+  },
+  "detail": {
+    "rating": "Rating",
+    "price_tax": "Tax",
+    "share": "Share",
+    "description": "Description",
+    "address": "Address",
+    "why_buy": "Why you should buy",
+    "customer_info": "Customer information is completely confidential",
+    "safe_delivery": "Products are shipped with labels and tags intact",
+    "return_policy": "Customers can exchange or get a refund if there are any defects",
+    "featured_products": "Featured Products",
+    "related_products": "Related Products",
+    "introduction": "Introduction of",
+    "diamond_comparison": "Comparison between Natural Diamond and Moissanite",
+    "detailed_images": "Images of",
+    "video_title": "Video about",
+    "gift_box": "Includes a luxurious gift box with purchase",
+    "satisfied_guarantee": " is sure to satisfy you."
   }
 }

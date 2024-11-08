@@ -8,29 +8,38 @@ import {
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
 
-export default function Social() {
+interface Props {
+  className?: string;
+}
+
+export default function Social({ className = '' }: Props) {
   return (
     <>
       <div className="social px-4">
         <FontAwesomeIcon
           icon={faFacebookF}
-          className="hover:text-primary cursor-pointer  mr-6"
+          title="Facebook"
+          className={`hover:text-primary transition-all ${className} cursor-pointer mr-6`}
         />
         <FontAwesomeIcon
           icon={faTwitter}
-          className="hover:text-primary cursor-pointer mr-6"
+          title="Twitter"
+          className={`hover:text-primary transition-all ${className} cursor-pointer mr-6`}
         />
         <FontAwesomeIcon
           icon={faGooglePlusG}
-          className="hover:text-primary cursor-pointer mr-6"
+          title="Google"
+          className={`hover:text-primary transition-all ${className} cursor-pointer mr-6`}
         />
         <FontAwesomeIcon
           icon={faPinterestP}
-          className="hover:text-primary cursor-pointer mr-6"
+          title="Pinterest"
+          className={`hover:text-primary transition-all ${className} cursor-pointer mr-6`}
         />
         <FontAwesomeIcon
           icon={faInstagram}
-          className="hover:text-primary cursor-pointer"
+          title="Instagram"
+          className={`hover:text-primary transition-all ${className} cursor-pointer`}
         />
       </div>
     </>

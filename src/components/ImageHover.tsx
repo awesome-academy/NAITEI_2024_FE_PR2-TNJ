@@ -5,7 +5,6 @@ interface ImageHoverProps {
   alt: string;
 }
 
-// component để làm trang chi tiết
 const ImageHover: React.FC<ImageHoverProps> = ({ src, alt }) => {
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -28,7 +27,7 @@ const ImageHover: React.FC<ImageHoverProps> = ({ src, alt }) => {
 
   return (
     <div
-      className="relative mx-auto overflow-hidden w-[300px] h-[200px] hover:cursor-crosshair"
+      className="relative mx-auto overflow-hidden w-full h-full hover:cursor-crosshair"
       onMouseMove={handleMouseMove}
       onMouseOut={handleMouseOut}
     >
@@ -36,7 +35,7 @@ const ImageHover: React.FC<ImageHoverProps> = ({ src, alt }) => {
         ref={imageRef}
         src={src}
         alt={alt}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full "
       />
     </div>
   );

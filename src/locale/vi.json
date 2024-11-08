@@ -115,5 +115,24 @@
       "expiry": "MM/YY",
       "cvc": "CVC"
     }
+  },
+  "detail": {
+    "rating": "Đánh giá",
+    "price_tax": "Thuế",
+    "share": "Chia sẻ",
+    "description": "Mô tả",
+    "address": "Địa chỉ",
+    "why_buy": "Tại sao bạn nên mua",
+    "customer_info": "Thông tin khách hàng được bảo mật hoàn toàn",
+    "safe_delivery": "Hàng hóa vận chuyển đảm bảo nguyên tem nhãn mác",
+    "return_policy": "Khách hàng được đổi trả hoặc hoàn tiền trong trường hợp hàng có lỗi",
+    "featured_products": "Sản phẩm nổi bật",
+    "related_products": "Sản phẩm cùng loại",
+    "introduction": "Giới thiệu sản phẩm ",
+    "diamond_comparison": "Phân biệt giữa đá kim cương tự nhiên và kim cương Moissanite",
+    "detailed_images": "Hình ảnh chi tiết ",
+    "video_title": "Video quay trực tiếp ",
+    "gift_box": "Tặng kèm hộp đựng sản phẩm sang trọng khi mua ",
+    "satisfied_guarantee": " chắc chắn sẽ làm bạn hài lòng."
   }
 }
