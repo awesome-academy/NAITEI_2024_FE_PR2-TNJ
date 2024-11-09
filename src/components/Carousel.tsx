@@ -8,7 +8,10 @@ interface Props {
   children: React.ReactNode;
   slidesToShow: number;
   slidesToScroll: number;
+  autoplay?: boolean;
   dots?: boolean;
+  speed?: number;
+  beforeChange?: (current: number, next: number) => void;
   responsive?: ResponsiveSetting[];
 }
 
@@ -17,16 +20,20 @@ export default function Carousel({
   slidesToScroll,
   slidesToShow,
   dots,
+  speed = 500,
+  autoplay = true,
+  beforeChange,
   responsive,
 }: Props): JSX.Element {
   const settings = {
     dots: dots,
     infinite: true,
-    autoplay: true,
-    speed: 500,
+    autoplay,
+    speed,
     slidesToShow: slidesToShow,
     slidesToScroll: slidesToScroll,
     responsive: responsive || [],
+    beforeChange: beforeChange,
   };
 
   return (

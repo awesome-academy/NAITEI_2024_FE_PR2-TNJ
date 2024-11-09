@@ -9,6 +9,7 @@ import Header from './components/Header';
 import { useTranslation } from 'react-i18next';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import Details from './pages/Details';
 
 function App(): JSX.Element {
   const { i18n } = useTranslation();
@@ -31,6 +32,7 @@ function App(): JSX.Element {
         <Route path="login" element={<Login />} />
         <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
+        <Route path="detail" element={<Details />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
 

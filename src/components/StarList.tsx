@@ -3,13 +3,14 @@ import star from '../image/star.png';
 import star_empty from '../image/star-empty.png';
 interface Props {
   rating: number;
+  className?: string;
 }
 
-export default function StarList({ rating }: Props): JSX.Element {
+export default function StarList({ className, rating }: Props): JSX.Element {
   const totalStars = 5;
 
   return (
-    <li className="ais-RatingMenu-item pb-4 flex items-center">
+    <li className={`ais-RatingMenu-item pb-4 flex items-center ${className}`}>
       {[...Array(totalStars)].map((_, index) => (
         <img
           key={index}
