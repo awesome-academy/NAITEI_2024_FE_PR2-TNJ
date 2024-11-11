@@ -10,10 +10,29 @@ import { useTranslation } from 'react-i18next';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Details from './pages/Details';
+import Product from './pages/Product';
+import { ToastContainer } from 'react-toastify';
+import News from './pages/News';
+import { useCart } from './hooks/useCart';
+import PurchaseHistory from './pages/PurchaseHistory';
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 function App(): JSX.Element {
   const { i18n } = useTranslation();
   const location = useLocation();
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    handleSetCart,
+    updateQuantity,
+    clearCart,
+  } = useCart();
+  const query = useQuery();
+  const id = query.get('id');
 
   function changeLanguage(lng: string): void {
     i18n.changeLanguage(lng);
@@ -21,21 +40,45 @@ function App(): JSX.Element {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [location.pathname, id]);
 
   return (
     <div className="font-sans h-full">
-      <Header onChangeLanguage={changeLanguage} />
+      <Header onChangeLanguage={changeLanguage} cart={cart} />
       <Routes>
-        <Route index element={<Homepage />} />
+        <Route index element={<Homepage addToCart={addToCart} />} />
         <Route path="registration" element={<SignUp />} />
         <Route path="login" element={<Login />} />
-        <Route path="cart" element={<Cart />} />
-        <Route path="checkout" element={<Checkout />} />
-        <Route path="detail" element={<Details />} />
+        <Route
+          path="cart"
+          element={
+            <Cart
+              cart={cart}
+              clearCart={clearCart}
+              removeFromCart={removeFromCart}
+              updateQuantity={updateQuantity}
+            />
+          }
+        />
+        <Route
+          path="checkout"
+          element={
+            <Checkout
+              clearCart={clearCart}
+              handleSetCart={handleSetCart}
+              updateQuantity={updateQuantity}
+              removeFromCart={removeFromCart}
+              cart={cart}
+            />
+          }
+        />
+        <Route path="news" element={<News />} />
+        <Route path="detail" element={<Details addToCart={addToCart} />} />
+        <Route path="product" element={<Product />} />
+        <Route path="purchase-history" element={<PurchaseHistory />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-
+      <ToastContainer />
       <Footer />
     </div>
   );

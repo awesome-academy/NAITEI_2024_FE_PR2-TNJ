@@ -1,8 +1,19 @@
 import React from 'react';
 import CartItem from './CartItem';
 import { useTranslation } from 'react-i18next';
+import { CartItem as CartItems } from 'src/types/cart.type';
 
-const CartTable: React.FC = () => {
+interface Props {
+  cart: CartItems[];
+  removeFromCart: (productId: number) => Promise<void>;
+  updateQuantity: (productId: number, quantity: number) => Promise<void>;
+}
+
+function CartTable({
+  cart,
+  updateQuantity,
+  removeFromCart,
+}: Props): JSX.Element {
   const { t } = useTranslation();
 
   return (
@@ -26,12 +37,17 @@ const CartTable: React.FC = () => {
         </tr>
       </thead>
       <tbody>
-        <CartItem />
-        <CartItem />
-        <CartItem />
+        {cart.map((item, index) => (
+          <CartItem
+            item={item}
+            removeFromCart={removeFromCart}
+            updateQuantity={updateQuantity}
+            key={index}
+          />
+        ))}
       </tbody>
     </table>
   );
-};
+}
 
 export default CartTable;

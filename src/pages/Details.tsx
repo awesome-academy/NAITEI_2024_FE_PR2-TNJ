@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageHover from 'src/components/ImageHover';
-import ring_1 from '../image/ring-1.jpg';
-import ring_2 from '../image/ring-2.jpg';
-import ring_3 from '../image/ring-3.jpg';
-import ring_4 from '../image/ring-4.jpg';
-import ring_5 from '../image/ring-5.jpg';
-import ring_6 from '../image/ring-6.jpg';
+
 import box from '../image/hop-dung-san-pham-trang-suc-tnj.jpg';
 import why_buy from '../image/why-buy.png';
 import client_service from '../image/client-service.png';
@@ -15,21 +10,65 @@ import diamond from '../image/diamond-compare.jpg';
 import { responsiveSliderProduct } from '../utils/variable.constant';
 import Carousel from 'src/components/Carousel';
 import StarList from 'src/components/StarList';
-import QuantityControl from 'src/components/QuantityControl';
 import Button from 'src/components/Button';
 import { useTranslation } from 'react-i18next';
 import Social from 'src/components/Social';
 import Title from 'src/components/Title';
-import ProductItem from 'src/components/ProductItem';
 import FeaturedProductItem from 'src/components/FeaturedProductItem';
+import { ProductType } from 'src/types/product.type';
+import { useLocation } from 'react-router-dom';
+import formatPrice from 'src/utils/formatPrice';
+import ProductItem from 'src/components/ProductItem';
 
-export default function Details() {
-  const [activeImageSrc, setActiveImageSrc] = useState(ring_1);
-  const images = [ring_1, ring_2, ring_3, ring_4, ring_5];
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+interface Props {
+  addToCart: (product: ProductType) => void;
+}
+
+export default function Details({ addToCart }: Props) {
+  const [activeImageSrc, setActiveImageSrc] = useState<string>();
+  const [data, setData] = useState<ProductType>();
+  const [dataProducts, setDataProducts] = useState<ProductType[]>([]);
+
+  const query = useQuery();
+  const id = query.get('id');
   const { t } = useTranslation();
 
-  const beforeChange = (current: number, next: number) =>
-    setActiveImageSrc(images[next]);
+  const [isHovered, setIsHovered] = useState(true);
+
+  const beforeChange = (current: number, next: number) => {
+    if (data?.img) {
+      setActiveImageSrc(data.img[next]);
+    }
+  };
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API}products`)
+      .then((res) => res.json())
+      .then((data) => setDataProducts(data));
+  }, []);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (id) {
+        try {
+          const response = await fetch(
+            `${process.env.REACT_APP_API}products/${id}`
+          );
+          const product = await response.json();
+          setData(product);
+          setActiveImageSrc(product.img[0]);
+        } catch (error) {
+          console.error('Error fetching product:', error);
+        }
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
 
   return (
     <div>
@@ -40,20 +79,30 @@ export default function Details() {
               <div className="flex flex-col md:flex-row  mx-[-15px]">
                 <div className="w-full md:w-1/2 flex flex-col px-[15px]">
                   <div className="mb-5">
-                    <div className="relative mb-[10px] w-full p-[10px] aspect-square">
-                      <ImageHover src={activeImageSrc} alt="product-image" />
+                    <div
+                      className="relative mb-[10px] w-full p-[10px] aspect-square"
+                      onMouseEnter={() => setIsHovered(false)}
+                      onMouseLeave={() => setIsHovered(true)}
+                    >
+                      {data?.img[0] && (
+                        <ImageHover
+                          src={`${process.env.PUBLIC_URL}${activeImageSrc}`}
+                          alt="product-image"
+                        />
+                      )}
                     </div>
-                    <div className="proudct-slider">
+                    <div className="proudct-slider mb-4">
                       <Carousel
                         slidesToScroll={1}
                         slidesToShow={4}
                         dots={true}
+                        autoplay={isHovered}
                         beforeChange={beforeChange}
                       >
-                        {images.map((imgSrc, index) => (
+                        {data?.img.map((imgSrc, index) => (
                           <div key={index} className="p-[10px] ">
                             <img
-                              src={imgSrc}
+                              src={`${process.env.PUBLIC_URL}${imgSrc}`}
                               className={`cursor-pointer transition-all ${
                                 imgSrc === activeImageSrc ? 'opacity-60' : ''
                               } `}
@@ -68,19 +117,24 @@ export default function Details() {
                 </div>
                 <div className="w-full md:w-1/2 flex flex-col mt-[10px] px-[15px]">
                   <h1 className="product_title text-[30px] font-normal leading-9 mb-5">
-                    Nhẫn Moissanite nam sang trọng 8.0mm - Kiểm định GRA
-                    NNAM0002
+                    {data?.name}
                   </h1>
                   <div className="rating flex mb-1">
-                    <StarList rating={5} />
+                    <StarList rating={data?.rating ? data.rating : 5} />
                     <span className="pb-4 ml-4 text-gray-400 text-[15px]">
                       <span>{t('detail.rating')}</span> (2)
                     </span>
                   </div>
                   <div className="price text-[22px] font-medium mb-5">
-                    <span className="text-primary mr-3">588.000 đ</span>
+                    <span className="text-primary mr-3">
+                      {formatPrice(
+                        data?.discountPrice ? data?.discountPrice : 1000000
+                      )}
+                    </span>
                     <span className="line-through text-gray-400">
-                      900.000 đ
+                      {formatPrice(
+                        data?.originalPrice ? data.originalPrice : 3000000
+                      )}
                     </span>
                   </div>
                   <div className="text-gray-400 mb-5">
@@ -98,16 +152,16 @@ export default function Details() {
                     <li>Kiểu dáng mạnh mẽ, sang trọng và đẳng cấp</li>
                   </ul>
                   <div className="flex gap-2 pb-5 mb-5 border-b">
-                    <QuantityControl />
                     <Button
                       title={t('homepage.add-to-cart')}
                       variant="primary"
                       className="w-fit"
+                      onClick={() => addToCart(data!)}
                     />
                   </div>
                   <div className="mb-5">
                     <span className="font-semibold">SKU: </span>
-                    <span className="text-gray-400">NNAM0002</span>
+                    <span className="text-gray-400">{data?.sku}</span>
                   </div>
                   <div className="mb-5 flex">
                     <span className="font-semibold">{t('detail.share')}: </span>
@@ -122,8 +176,7 @@ export default function Details() {
               </h1>
 
               <h1 className="text-xl font-semibold mb-4">
-                {t('detail.introduction')} nhẫn Moissanite nam sang trọng
-                NNAM0002
+                {t('detail.introduction')} {data?.name}
               </h1>
               <div className="space-y-4">
                 <p className="text-sm text-gray-500">
@@ -156,39 +209,42 @@ export default function Details() {
 
               <div className="image_video">
                 <h1 className="text-xl font-semibold mb-4">
-                  {t('detail.detailed_images')} nhẫn Moissanite nam sang trọng
-                  NNAM0002
+                  {t('detail.detailed_images')} {data?.name}
                 </h1>
-                <iframe
-                  className="w-full aspect-video"
-                  src="https://www.youtube.com/embed/2QW-BXrlOrs"
-                  title="YouTube video player"
-                  frameBorder="0"
-                ></iframe>
-                <h1 className="text-lg text-center font-semibold my-4">
-                  {t('detail.video_title')} nhẫn nam Moissanite NNAM0002
-                </h1>
-                <img src={ring_1} alt="ring" className="mb-4" />
-                <img src={ring_2} alt="ring" className="mb-4" />
-                <img src={ring_3} alt="ring" className="mb-4" />
-                <img src={ring_4} alt="ring" className="mb-4" />
-                <img src={ring_5} alt="ring" className="mb-4" />
-                <img src={ring_6} alt="ring" className="mb-4" />
+                {data?.iframe && (
+                  <>
+                    <iframe
+                      className="w-full aspect-video"
+                      src={data?.iframe}
+                      title="YouTube video player"
+                      frameBorder="0"
+                    ></iframe>
+                    <h1 className="text-lg text-center font-semibold my-4">
+                      {t('detail.video_title')} {data?.name}
+                    </h1>
+                  </>
+                )}
+                {data?.img.map((item, index) => (
+                  <img
+                    src={`${process.env.PUBLIC_URL}${item}`}
+                    alt="ring"
+                    key={index}
+                    className="mb-4"
+                  />
+                ))}
+
                 <h1 className="text-xl font-semibold my-4">
-                  {t('detail.why_buy')} nhẫn nam bạc đẹp đính đá Moissanite tại
-                  Trang Sức TNJ
+                  {t('detail.why_buy')} {data?.name}
                 </h1>
                 <img src={why_buy} alt="ring" className="mb-4" />
                 <h1 className="text-xl font-semibold my-4">
-                  {t('detail.gift_box')} nhẫn nam bạc
+                  {t('detail.gift_box')} {data?.name}
                 </h1>
                 <img src={box} alt="ring" className="mb-4" />
               </div>
               <div className="address text-sm flex flex-col mb-5 text-gray-500 gap-y-3">
                 <h1>
-                  <span className="font-semibold">
-                    Nhẫn Moissanite nam sang trọng NNAM0002
-                  </span>
+                  <span className="font-semibold">{data?.name}</span>
                   <span> {t('detail.satisfied_guarantee')} </span>
                 </h1>
                 <p>
@@ -237,10 +293,9 @@ export default function Details() {
                 {t('detail.featured_products')}
               </h1>
               <div className="ul flex flex-col mt-6">
-                <FeaturedProductItem />
-                <FeaturedProductItem />
-                <FeaturedProductItem />
-                <FeaturedProductItem />
+                {dataProducts.map((item) => (
+                  <FeaturedProductItem key={item.id} item={item} />
+                ))}
               </div>
             </div>
           </div>
@@ -256,22 +311,15 @@ export default function Details() {
             <Carousel
               slidesToScroll={1}
               slidesToShow={4}
-              autoplay={false}
+              autoplay={true}
               responsive={responsiveSliderProduct}
               dots={true}
             >
-              <div className=" p-[10px]">
-                <ProductItem />
-              </div>
-              <div className="p-[10px]">
-                <ProductItem />
-              </div>
-              <div className="p-[10px]">
-                <ProductItem />
-              </div>
-              <div className="p-[10px]">
-                <ProductItem />
-              </div>
+              {dataProducts.map((item) => (
+                <div key={item.id} className="p-[10px]">
+                  <ProductItem item={item} addToCart={addToCart} />
+                </div>
+              ))}
             </Carousel>
           </div>
         </div>

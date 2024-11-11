@@ -1,103 +1,54 @@
-import React, { useState } from 'react';
-import banner_1 from '../image/banner-homepage.png';
-import banner_2 from '../image/banner-homepage-2.png';
-import banner_3 from '../image/banner-homepage-3.png';
-import subBanner_1 from '../image/banner-1.jpg';
-import subBanner_2 from '../image/banner-2.jpg';
-import subBanner_3 from '../image/banner-3.jpg';
-import subBanner_4 from '../image/banner-4.jpg';
+import React, { useEffect, useState } from 'react';
+
 import Carousel from '../components/Carousel';
 import Title from '../components/Title';
 import NewsItem from '../components/NewsItem';
-import slider_1 from '../image/slider-1.jpg';
-import slider_2 from '../image/slider-2.jpg';
-import slider_3 from '../image/slider-3.jpg';
-import slider_4 from '../image/slider-4.jpg';
-import slider_5 from '../image/slider-5.jpg';
-import slider_6 from '../image/slider-6.jpg';
-import slider_7 from '../image/slider-7.jpg';
 import ProductItem from 'src/components/ProductItem';
 import { useTranslation } from 'react-i18next';
 import {
   responsiveSliderProduct,
   responsiveNews,
 } from '../utils/variable.constant';
-import { Link } from 'react-router-dom';
+import BannerComponent from 'src/components/Banner';
+import ImageSlider from 'src/components/ImageSlider';
+import SliderCustomer from 'src/components/SliderCustomer';
+import { NewsItem as News } from 'src/types/news.type';
+import { ProductType } from 'src/types/product.type';
 
-export default function Homepage(): JSX.Element {
+interface Props {
+  addToCart: (product: ProductType) => void;
+}
+
+export default function Homepage({ addToCart }: Props): JSX.Element {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<number>(1);
+  const [newsData, setNewsData] = useState<News[]>([]);
+  const [flashSellProduct, setFlashSellProduct] = useState<ProductType[]>([]);
 
-  // Thay thế bằng api
-  const sliderApi = [
-    slider_1,
-    slider_2,
-    slider_3,
-    slider_4,
-    slider_5,
-    slider_6,
-    slider_7,
-  ];
-
-  // Thay thế bằng api
   const mostPurchasedProductTab = [
     { id: 1, data: 'Nhẫn Bạc Nam' },
     { id: 2, data: 'Dây Chuyền Bạc Nữ' },
     { id: 3, data: 'Lắc tay bạc nữ' },
     { id: 4, data: 'Nhẫn đôi bạc' },
   ];
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API}news`)
+      .then((res) => res.json())
+      .then((data) => setNewsData(data));
+  }, []);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API}products`)
+      .then((res) => res.json())
+      .then((data) => setFlashSellProduct(data));
+  }, []);
+
   return (
     <div className="w-full z-10">
-      <div className="mb-[15px] w-full">
-        <Carousel slidesToScroll={1} slidesToShow={1} dots={true}>
-          <img src={banner_1} alt="banner" />
-          <img src={banner_2} alt="banner" />
-          <img src={banner_3} alt="banner" />
-        </Carousel>
-      </div>
+      <ImageSlider />
 
-      <div className="max-w-[1250px] mx-auto mb-6">
-        <div className="w-full flex flex-col md:flex-row">
-          <div className="w-full md:w-[60%] p-[15px] flex">
-            <Link to="/product/1">
-              <img
-                src={subBanner_1}
-                alt="banner"
-                className="cursor-pointer transition-all hover:-translate-y-[6px] duration-300"
-              />
-            </Link>
-          </div>
-          <div className="w-full md:w-[40%] p-[15px] flex">
-            <Link to="/product/2">
-              <img
-                src={subBanner_2}
-                alt="banner"
-                className="cursor-pointer transition-all hover:-translate-y-[6px] duration-300"
-              />
-            </Link>
-          </div>
-        </div>
-        <div className="w-full flex flex-col md:flex-row">
-          <div className="w-full md:w-[40%] p-[15px] flex">
-            <Link to="/product/3">
-              <img
-                src={subBanner_3}
-                alt="banner"
-                className="cursor-pointer transition-all hover:-translate-y-[6px] duration-300"
-              />
-            </Link>
-          </div>
-          <div className="w-full md:w-[60%] p-[15px] flex">
-            <Link to="/product/4">
-              <img
-                src={subBanner_4}
-                alt="banner"
-                className="cursor-pointer transition-all hover:-translate-y-[6px] duration-300"
-              />
-            </Link>
-          </div>
-        </div>
-      </div>
+      <BannerComponent />
 
       <div className="max-w-[1240px] mx-auto my-8 z-10">
         <h1 className="mx-[10px] font-bold uppercase text-4xl text-primary mb-4">
@@ -109,18 +60,11 @@ export default function Homepage(): JSX.Element {
           dots={false}
           responsive={responsiveSliderProduct}
         >
-          <div className=" p-[10px]">
-            <ProductItem />
-          </div>
-          <div className="p-[10px]">
-            <ProductItem />
-          </div>
-          <div className="p-[10px]">
-            <ProductItem />
-          </div>
-          <div className="p-[10px]">
-            <ProductItem />
-          </div>
+          {flashSellProduct.map((item, index) => (
+            <div className=" p-[10px]" key={index}>
+              <ProductItem item={item} addToCart={addToCart} />
+            </div>
+          ))}
         </Carousel>
       </div>
 
@@ -131,13 +75,8 @@ export default function Homepage(): JSX.Element {
             allowFullScreen
             src="https://www.youtube.com/embed/Wm8to68EPRw?feature=oembed&amp;start&amp;end&amp;wmode=opaque&amp;loop=0&amp;controls=1&amp;mute=0&amp;rel=0&amp;modestbranding=0"
           ></iframe>
-          <div className="w-full md:w-1/2">
-            <Carousel slidesToScroll={1} slidesToShow={1} dots={true}>
-              {sliderApi.map((item, index) => (
-                <img key={index} src={item} alt="slider" />
-              ))}
-            </Carousel>
-          </div>
+
+          <SliderCustomer />
         </div>
       </div>
 
@@ -172,18 +111,11 @@ export default function Homepage(): JSX.Element {
                 responsive={responsiveSliderProduct}
                 dots={false}
               >
-                <div className=" p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
+                {flashSellProduct.map((item, index) => (
+                  <div className=" p-[10px]" key={index}>
+                    <ProductItem item={item} addToCart={addToCart} />
+                  </div>
+                ))}
               </Carousel>
             )}
             {activeTab === 2 && (
@@ -193,18 +125,11 @@ export default function Homepage(): JSX.Element {
                 dots={false}
                 responsive={responsiveSliderProduct}
               >
-                <div className=" p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
+                {flashSellProduct.map((item, index) => (
+                  <div className=" p-[10px]" key={index}>
+                    <ProductItem item={item} addToCart={addToCart} />
+                  </div>
+                ))}
               </Carousel>
             )}
             {activeTab === 3 && (
@@ -214,18 +139,11 @@ export default function Homepage(): JSX.Element {
                 dots={false}
                 responsive={responsiveSliderProduct}
               >
-                <div className=" p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
+                {flashSellProduct.map((item, index) => (
+                  <div className=" p-[10px]" key={index}>
+                    <ProductItem item={item} addToCart={addToCart} />
+                  </div>
+                ))}
               </Carousel>
             )}
             {activeTab === 4 && (
@@ -235,18 +153,11 @@ export default function Homepage(): JSX.Element {
                 dots={false}
                 responsive={responsiveSliderProduct}
               >
-                <div className=" p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
-                <div className="p-[10px]">
-                  <ProductItem />
-                </div>
+                {flashSellProduct.map((item, index) => (
+                  <div className=" p-[10px]" key={index}>
+                    <ProductItem item={item} addToCart={addToCart} />
+                  </div>
+                ))}
               </Carousel>
             )}
           </div>
@@ -266,15 +177,11 @@ export default function Homepage(): JSX.Element {
           dots={true}
           responsive={responsiveNews}
         >
-          <div className="my-8">
-            <NewsItem />
-          </div>
-          <div className="my-8">
-            <NewsItem />
-          </div>
-          <div className="my-8">
-            <NewsItem />
-          </div>
+          {newsData.map((item, index) => (
+            <div className="my-8" key={index}>
+              <NewsItem newsItem={item} key={item.id} />
+            </div>
+          ))}
         </Carousel>
       </div>
     </div>

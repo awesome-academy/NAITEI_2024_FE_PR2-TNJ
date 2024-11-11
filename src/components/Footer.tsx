@@ -140,10 +140,18 @@ export default function Footer() {
                   <a href="#">{t('footer.contact-us')}</a>
                 </li>
                 <li className="hover:text-primary transition-all">
-                  <a href="#">{t('footer.cart')}</a>
+                  <Link
+                    to={sessionStorage.getItem('token') ? '/cart' : '/login'}
+                  >
+                    {t('footer.cart')}
+                  </Link>
                 </li>
                 <li className="hover:text-primary transition-all">
-                  <a href="#">{t('footer.order-history')}</a>
+                  <Link
+                    to={sessionStorage.getItem('token') ? '/cart' : '/login'}
+                  >
+                    {t('footer.order-history')}
+                  </Link>
                 </li>
               </ul>
             </div>

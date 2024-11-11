@@ -31,6 +31,10 @@
     "news": "News",
     "user": "User",
     "cart": "Cart",
+    "login": "Login",
+    "register": "Register",
+    "purchaseHistory": "Order history",
+    "logout": "Log out",
     "input-placeholder": "Enter your keyword..."
   },
   "homepage": {
@@ -65,7 +69,10 @@
   "breadcrumb": {
     "home": "Home",
     "cart": "Cart",
-    "checkout": "Checkout"
+    "checkout": "Checkout",
+    "product": "Product",
+    "news": "News",
+    "purchase-history": "Order History"
   },
   "cart": {
     "product": "product",
@@ -79,7 +86,9 @@
     "total": "Total",
     "tax-included": "Tax included",
     "checkout": "Checkout",
-    "buy-more": "Buy more"
+    "buy-more": "Buy more",
+    "clear": "Cart cleared!",
+    "removeItemFromCart": "Product removed from cart"
   },
   "checkout": {
     "company-name": "Company's name",
@@ -134,5 +143,43 @@
     "video_title": "Video about",
     "gift_box": "Includes a luxurious gift box with purchase",
     "satisfied_guarantee": " is sure to satisfy you."
+  },
+  "error": {
+    "fullNameRequired": "Full name cannot be empty!",
+    "phoneNumberInvalid": "Phone number must be 10 digits!",
+    "addressRequired": "Address cannot be empty!",
+    "emailInvalid": "Invalid email format!",
+    "emailExists": "This email has been registered!",
+    "emailNotFound": "Email not found",
+    "incorrectPassword": "Incorrect password",
+    "passwordLength": "Password must be longer than 3 characters!",
+    "passwordMismatch": "Password and confirm password do not match!",
+    "missingShippingInfo": "Shipping info required!",
+    "paymentError": "Please complete all payment information.",
+    "invalidCardNumber": "Invalid card number. Please enter 16 digits.",
+    "invalidExpiry": "Invalid expiry date. Please enter in mm/yy format.",
+    "invalidCvc": "Invalid CVC. Please enter 3 digits."
+  },
+  "success": {
+    "sign-up": "Sucessfully signed up!",
+    "login": "Login successful!",
+    "checkout": "Sucessfully checkout!"
+  },
+  "purchase-history": {
+    "purchase-history": "Purchase History",
+    "order": "Order ",
+    "total-amount": "Total Amount",
+    "items": "Items",
+    "product": "items",
+    "reciept-detail": "Recipient Details",
+    "order-detail": "Order Details",
+    "address": "Address",
+    "phone": "Phone",
+    "notes": "Notes",
+    "quantity": "Quantity",
+    "shipping": "Shipping Fee"
+  },
+  "news": {
+    "title": "Latest News"
   }
 }

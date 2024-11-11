@@ -1,14 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import eye from '../image/eye-regular.svg';
 import eyeSlash from '../image/eye-slash-regular.svg';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import Input from 'src/components/Input';
 import logo from '../image/TNJ-logo.png';
+import { decrypt } from 'src/utils/encrypt';
+import { saveUserToStorage } from 'src/utils/jwt';
+import usePersistedState from 'src/hooks/usePersistedState';
 
 export default function Login(): JSX.Element {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
+
+  const [email, setEmail] = usePersistedState('emailLogin', '');
+  const [password, setPassword] = useState('');
+
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
+  const registeredEmail = location.state?.registeredEmail || '';
+
+  useEffect(() => {
+    if (registeredEmail) {
+      setEmail(registeredEmail);
+    }
+  }, [registeredEmail]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError(true);
+      toast.error(t('error.emailInvalid'));
+      return;
+    }
+
+    if (!password) {
+      setPasswordError(true);
+      toast.error(t('error.passwordLength'));
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API}users?email=${email}`
+      );
+      const users = await response.json();
+      const user = users[0];
+
+      if (!user) {
+        setEmailError(true);
+        toast.error(t('error.emailNotFound'));
+        return;
+      }
+
+      const decryptedPassword = decrypt(
+        user.password,
+        process.env.REACT_APP_SECRET_KEY || ''
+      );
+
+      if (password !== decryptedPassword) {
+        setPasswordError(true);
+        toast.error(t('error.incorrectPassword'));
+        return;
+      }
+
+      await saveUserToStorage(user);
+
+      navigate('/');
+      toast.success(t('success.login'));
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <div className="flex w-full border-b-2 items-center justify-center min-h-screen bg-white">
@@ -22,16 +90,28 @@ export default function Login(): JSX.Element {
           </h2>
         </div>
 
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <Input
             label={t('login.email')}
-            name="username"
+            inputClassName={emailError ? 'border-red-500' : ''}
+            name="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError(false);
+            }}
             placeholder={t('login.email-placeholder')}
             type="email"
           />
           <Input
             label={t('login.password')}
+            inputClassName={passwordError ? 'border-red-500' : ''}
             name="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setPasswordError(false);
+            }}
             placeholder={t('login.password-placeholder')}
             type={showPassword ? 'text' : 'password'}
             icon={showPassword ? eye : eyeSlash}

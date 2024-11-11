@@ -16,7 +16,7 @@ export default function Breadcrumb() {
         <nav className="inline-flex items-center text-[14px] justify-center flex-wrap mt-[10px]">
           <Link
             to="/"
-            className="mr-[6px] hover:text-primary duration-300 transition-all"
+            className="mr-[6px] text-primary hover:underline duration-300 transition-all"
           >
             <span className="after:content-['/'] after:ml-[5px]">
               {t('breadcrumb.home')}
@@ -28,14 +28,14 @@ export default function Breadcrumb() {
             const isLast = index === pathParts.length - 1;
 
             return isLast ? (
-              <span key={routeTo} className="text-[#333333]">
+              <span key={routeTo} className="text-gray-600">
                 {t(`breadcrumb.${part}`)}
               </span>
             ) : (
               <Link
                 key={routeTo}
                 to={routeTo}
-                className="mr-[6px] hover:text-primary duration-300 transition-all"
+                className="mr-[6px] text-primary hover:underline duration-300 transition-all"
               >
                 <span className="after:content-['/'] after:ml-[5px]">
                   {t(`breadcrumb.${part}`)}
